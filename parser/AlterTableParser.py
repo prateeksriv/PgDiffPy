@@ -10,6 +10,7 @@ class AlterTableParser(object):
 
         parser.expect("ALTER", "TABLE")
         parser.expect_optional("ONLY")
+        ifExists = parser.expect_optional("IF", "EXISTS")
 
         tableName = parser.parse_identifier()
         schemaName = ParserUtils.get_schema_name(tableName, database)
@@ -34,6 +35,9 @@ class AlterTableParser(object):
             if sequence is not None:
                 AlterTableParser.parseSequence(parser, sequence, tableName, database);
                 return
+            
+            if ifExists:
+                return
 
             raise Exception("Cannot find object '%s' for statement '%s'." % (tableName, statement))
 
@@ -50,15 +54,15 @@ class AlterTableParser(object):
                     parser.parse_identifier()
             elif (parser.expect_optional("ADD")):
                 if (parser.expect_optional("FOREIGN", "KEY")):
-                    print 'parseAddForeignKey(parser, table);'
+                    print('parseAddForeignKey(parser, table);')
                 elif (parser.expect_optional("CONSTRAINT")):
                     AlterTableParser.parseAddConstraint(parser, table, schema)
                 else:
                     parser.throw_unsupported_command()
             elif (parser.expect_optional("ENABLE")):
-                print 'parseEnable(parser, outputIgnoredStatements, tableName, database);'
+                print('parseEnable(parser, outputIgnoredStatements, tableName, database);')
             elif (parser.expect_optional("DISABLE")):
-                print 'parseDisable(parser, outputIgnoredStatements, tableName, database);'
+                print('parseDisable(parser, outputIgnoredStatements, tableName, database);')
             else:
                 parser.throw_unsupported_command()
 
@@ -112,6 +116,10 @@ class AlterTableParser(object):
                     parser.throw_unsupported_command()
             else:
                 parser.throw_unsupported_command()
+        elif parser.expect_optional("DROP", "DEFAULT"):
+            column = table.columns.get(columnName)
+            if column:
+                column.defaultValue = None
         else:
             parser.throw_unsupported_command()
 

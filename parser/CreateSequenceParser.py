@@ -17,6 +17,9 @@ class CreateSequenceParser(object):
 
         schema.addSequence(sequence)
 
+        if parser.expect_optional("AS"):
+            parser.parse_identifier()
+
         while not parser.expect_optional(";"):
             if parser.expect_optional("INCREMENT"):
                 parser.expect_optional("BY")

@@ -6,6 +6,7 @@ class CreateSchemaParser(object):
 	def parse(database, statement):
 		parser = Parser(statement)
 		parser.expect("CREATE", "SCHEMA")
+		parser.expect_optional("IF", "NOT", "EXISTS")
 
 		if parser.expect_optional("AUTHORIZATION"):
 			schema = PgSchema(ParserUtils.get_object_name(parser.parse_identifier()))

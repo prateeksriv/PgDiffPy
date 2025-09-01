@@ -27,7 +27,7 @@ class Parser(object):
     def parse_identifier(self):
         identifier = self._parse_identifier()
 
-        if self.statement[self.position] == '.':
+        while self.position < len(self.statement) and self.statement[self.position] == '.':
             self.position += 1
             identifier += '.' + self._parse_identifier()
 

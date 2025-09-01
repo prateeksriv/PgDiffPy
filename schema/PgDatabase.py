@@ -1,5 +1,5 @@
 import logging
-from PgSchema import PgSchema
+from .PgSchema import PgSchema
 
 
 class PgDatabase(object):
@@ -20,4 +20,4 @@ class PgDatabase(object):
 
     # Returns schemaName object or Default schema if schemaName is None
     def getSchema(self, schema_name):
-        return self.schemas.get(schema_name, self.default_schema)
+        return self.schemas.get(schema_name)

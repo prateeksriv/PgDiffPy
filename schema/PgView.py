@@ -10,14 +10,24 @@ class PgView(object):
         self.columnComments = dict()
         self.query = None
 
-    def __cmp__(self, other):
-        if set(self.columnNames) != set(other.columnNames):
-            return 1
+    def __eq__(self, other):
+        if other is None:
+            return False
+
+        if self.columnNames is None and other.columnNames is not None:
+            return False
+        elif self.columnNames is not None and other.columnNames is None:
+            return False
+        elif self.columnNames is not None and other.columnNames is not None and set(self.columnNames) != set(other.columnNames):
+            return False
 
         if self.query.strip() != other.query.strip():
-            return 1
+            return False
 
-        return 0
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
     def getCreationSQL(self):
         sbSQL = []
@@ -41,13 +51,13 @@ class PgView(object):
         sbSQL.append(self.query)
         sbSQL.append(';')
 
-        for defaultValue in self.defaultValues:
+        for columnName, defaultValue in self.defaultValues.items():
             sbSQL.append("\n\nALTER VIEW ")
             sbSQL.append(PgDiffUtils.getQuotedName(self.name))
             sbSQL.append(" ALTER COLUMN ")
-            sbSQL.append(PgDiffUtils.getQuotedName(defaultValue.columnName))
+            sbSQL.append(PgDiffUtils.getQuotedName(columnName))
             sbSQL.append(" SET DEFAULT ")
-            sbSQL.append(defaultValue.defaultValue)
+            sbSQL.append(defaultValue)
             sbSQL.append(';')
 
         if self.comment:
@@ -57,12 +67,14 @@ class PgView(object):
             sbSQL.append(self.comment)
             sbSQL.append(';')
 
-        for columnComment in self.columnComments:
-            if columnComment.comment:
+        for columnName, columnComment in self.columnComments.items():
+            if columnComment:
                 sbSQL.append("\n\nCOMMENT ON COLUMN ")
-                sbSQL.append(PgDiffUtils.getQuotedName(columnComment.columnName))
+                sbSQL.append(PgDiffUtils.getQuotedName(self.name))
+                sbSQL.append('.')
+                sbSQL.append(PgDiffUtils.getQuotedName(columnName))
                 sbSQL.append(" IS ")
-                sbSQL.append(columnComment.getComment())
+                sbSQL.append(columnComment)
                 sbSQL.append(';')
 
         return ''.join(sbSQL)

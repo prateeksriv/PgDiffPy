@@ -13,8 +13,8 @@ class CreateTableParser(object):
         # Optional IF NOT EXISTS, irrelevant for our purposes
         parser.expect_optional("IF", "NOT", "EXISTS")
 
-        tableName = ParserUtils.get_object_name(parser.parse_identifier())
-        table = PgTable(tableName)
+        tableName = parser.parse_identifier()
+        table = PgTable(ParserUtils.get_object_name(tableName))
         # Figure it out why do we need this
         schemaName = ParserUtils.get_schema_name(tableName, database)
         schema = database.getSchema(schemaName)
@@ -48,11 +48,15 @@ class CreateTableParser(object):
                 elif parser.expect_optional("OIDS=false"):
                     table.oids = "OIDS=false"
                 else:
-                    print 'table.setWith(parser.getExpression())'
+                    print('table.setWith(parser.getExpression())')
             elif parser.expect_optional("TABLESPACE"):
-                print 'table.setTablespace(parser.parseString()'
+                print('table.setTablespace(parser.parseString()')
+            elif parser.expect_optional("PARTITION", "BY"):
+                parser.get_expression()
             else:
                 parser.throw_unsupported_command()
+
+
 
     @staticmethod
     def parseConstraint(parser, table):

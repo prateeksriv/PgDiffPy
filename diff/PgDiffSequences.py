@@ -1,4 +1,4 @@
-from PgDiffUtils import PgDiffUtils
+from .PgDiffUtils import PgDiffUtils
 
 class PgDiffSequences(object):
 

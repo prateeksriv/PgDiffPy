@@ -91,7 +91,7 @@ class PgDiff(object):
     @staticmethod
     def update_schemas(writer, arguments, old_database, new_database):
         # We set search path if more than one schemas or it's name is not public
-        set_search_path = len(new_database.schemas) > 1 or new_database.schemas.itervalues().next().name != "public"
+        set_search_path = len(new_database.schemas) > 1 or next(iter(new_database.schemas.values())).name != "public"
 
         for newSchemaName in new_database.schemas:
             if set_search_path:
@@ -164,7 +164,7 @@ class LogLevelAction(argparse.Action):
             setattr(namespace, self.dest, logging.CRITICAL)
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(prog='PgDiffPy', usage='python PgDiff.py [options] <old_dump> <new_dump>')
 
     parser.add_argument('old_dump')
@@ -203,3 +203,6 @@ if __name__ == "__main__":
         else:
             print('Error: %s' % e)
         exit(1)
+
+if __name__ == "__main__":
+    main()

@@ -49,7 +49,14 @@ class CommentParser(object):
         objectName = ParserUtils.get_object_name(columnName)
         tableName = ParserUtils.get_second_object_name(columnName)
         schemaName = ParserUtils.get_third_object_name(columnName)
-        schema = database.getSchema(schemaName)
+        
+        if schemaName is None:
+            schema = database.getDefaultSchema()
+        else:
+            schema = database.getSchema(schemaName)
+
+        if schema is None:
+            raise Exception("Cannot find schema '%s' for statement '%s'." % (schemaName, parser.statement))
 
         table = schema.getTable(tableName)
 

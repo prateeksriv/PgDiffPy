@@ -22,7 +22,7 @@ class CreateIndexParser(object):
         schema = database.getSchema(schemaName)
 
         if (schema is None):
-            print 'ERROR: CreateIndexParser[Line 21]'
+            print('ERROR: CreateIndexParser[Line 21]')
             # throw new RuntimeException(MessageFormat.format(
             #         Resources.getString("CannotFindSchema"), schemaName,
             #         statement));
@@ -31,7 +31,7 @@ class CreateIndexParser(object):
         table = schema.getTable(objectName)
 
         if (table is None):
-            print 'ERROR: CreateIndexParser[Line 32]'
+            print('ERROR: CreateIndexParser[Line 32]')
             # throw new RuntimeException(MessageFormat.format(
             #         Resources.getString("CannotFindTable"), tableName,
             #         statement));

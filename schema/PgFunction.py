@@ -1,7 +1,7 @@
 import hashlib
+import base64
 
 from diff.PgDiffUtils import PgDiffUtils
-from helpers.OrderedDict import OrderedDict
 
 class PgFunction(object):
     def __init__(self):
@@ -122,7 +122,7 @@ class PgFunction(object):
 
         sbSQL.append(')')
 
-        return hashlib.md5(''.join(sbSQL)).digest().encode("base64")
+        return base64.b64encode(hashlib.md5(''.join(sbSQL).encode('utf-8')).digest())
 
 
 class Argument(object):

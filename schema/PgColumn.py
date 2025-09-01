@@ -6,6 +6,7 @@ class PgColumn(object):
     PATTERN_NULL = re.compile(r"^(.+)[\s]+NULL$", re.I)
     PATTERN_NOT_NULL = re.compile(r"^(.+)[\s]+NOT[\s]+NULL$", re.I)
     PATTERN_DEFAULT = re.compile(r"^(.+)[\s]+DEFAULT[\s]+(.+)$", re.I)
+    PATTERN_GENERATED = re.compile(r"^(.+)[\s]+GENERATED[\s]+ALWAYS[\s]+AS[\s]+(.+)[\s]+STORED$", re.I)
 
     def __init__(self, name):
         self.name = name
@@ -14,6 +15,7 @@ class PgColumn(object):
         self.statistics = None
         self.storage = None
         self.comment = None
+        self.generated = None
 
     def parseDefinition(self, definition):
         string = definition
@@ -35,6 +37,11 @@ class PgColumn(object):
         if matcher:
             string = matcher.group(1).strip()
             self.defaultValue = matcher.group(2).strip()
+
+        matcher = self.PATTERN_GENERATED.match(string)
+        if matcher:
+            string = matcher.group(1).strip()
+            self.generated = matcher.group(2).strip()
 
         self.type = string
 

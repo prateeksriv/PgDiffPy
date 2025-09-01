@@ -1,9 +1,8 @@
-from helpers.OrderedDict import OrderedDict
 from diff.PgDiffUtils import PgDiffUtils
 
 class PgSchema(object):
     def __init__(self, schemaName):
-        self.tables = OrderedDict()
+        self.tables = {}
         self.indexes = dict()
         self.functions = dict()
         self.sequences = dict()

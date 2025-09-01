@@ -1,0 +1,3 @@
+This project is a Python port of the original [apgdiff](http://apgdiff.com/) tool. All credit for the original logic and concept goes to the apgdiff team.
+
+This project is based on the work of [PgDiffPy](https://github.com/Gesha3809/PgDiffPy).

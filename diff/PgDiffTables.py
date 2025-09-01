@@ -1,4 +1,4 @@
-from PgDiffUtils import PgDiffUtils
+from .PgDiffUtils import PgDiffUtils
 from schema.PgColumn import PgColumnUtils
 
 class PgDiffTables(object):

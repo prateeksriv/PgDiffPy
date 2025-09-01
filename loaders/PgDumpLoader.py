@@ -56,57 +56,78 @@ class PgDumpLoader(object):
 
         statements = sqlparse.split(open(dumpFileName,'r'))
         logging.debug('Parsed %d statements' % len(statements))
+
+        create_schema_statements = []
+        create_table_statements = []
+        alter_table_statements = []
+        create_index_statements = []
+        create_trigger_statements = []
+        create_function_statements = []
+        create_sequence_statements = []
+        alter_sequence_statements = []
+        create_view_statements = []
+        alter_view_statements = []
+        comment_statements = []
+        other_statements = []
+
         for statement in statements:
             statement = PgDumpLoader.strip_comment(statement).strip()
+            if not statement:
+                continue
+
             if PgDumpLoader.PATTERN_CREATE_SCHEMA.match(statement):
-                CreateSchemaParser.parse(database, statement)
-                continue
-
-            match = PgDumpLoader.PATTERN_DEFAULT_SCHEMA.match(statement)
-            if match:
+                create_schema_statements.append(statement)
+            elif PgDumpLoader.PATTERN_DEFAULT_SCHEMA.match(statement):
+                # Default schema needs to be set early
+                match = PgDumpLoader.PATTERN_DEFAULT_SCHEMA.match(statement)
                 database.setDefaultSchema(match.group(1))
-                continue
+            elif PgDumpLoader.PATTERN_CREATE_TABLE.match(statement):
+                create_table_statements.append(statement)
+            elif PgDumpLoader.PATTERN_ALTER_TABLE.match(statement):
+                alter_table_statements.append(statement)
+            elif PgDumpLoader.PATTERN_CREATE_SEQUENCE.match(statement):
+                create_sequence_statements.append(statement)
+            elif PgDumpLoader.PATTERN_ALTER_SEQUENCE.match(statement):
+                alter_sequence_statements.append(statement)
+            elif PgDumpLoader.PATTERN_CREATE_INDEX.match(statement):
+                create_index_statements.append(statement)
+            elif PgDumpLoader.PATTERN_CREATE_VIEW.match(statement):
+                create_view_statements.append(statement)
+            elif PgDumpLoader.PATTERN_ALTER_VIEW.match(statement):
+                alter_view_statements.append(statement)
+            elif PgDumpLoader.PATTERN_CREATE_TRIGGER.match(statement):
+                create_trigger_statements.append(statement)
+            elif PgDumpLoader.PATTERN_CREATE_FUNCTION.match(statement):
+                create_function_statements.append(statement)
+            elif PgDumpLoader.PATTERN_COMMENT.match(statement):
+                comment_statements.append(statement)
+            else:
+                other_statements.append(statement)
 
-            if PgDumpLoader.PATTERN_CREATE_TABLE.match(statement):
-                CreateTableParser.parse(database, statement)
-                continue
+        for statement in create_schema_statements:
+            CreateSchemaParser.parse(database, statement)
+        for statement in create_table_statements:
+            CreateTableParser.parse(database, statement)
+        for statement in alter_table_statements:
+            AlterTableParser.parse(database, statement)
+        for statement in create_sequence_statements:
+            CreateSequenceParser.parse(database, statement)
+        for statement in alter_sequence_statements:
+            AlterSequenceParser.parse(database, statement)
+        for statement in create_index_statements:
+            CreateIndexParser.parse(database, statement)
+        for statement in create_view_statements:
+            CreateViewParser.parse(database, statement)
+        for statement in alter_view_statements:
+            AlterViewParser.parse(database, statement)
+        for statement in create_trigger_statements:
+            CreateTriggerParser.parse(database, statement, ignoreSlonyTriggers)
+        for statement in create_function_statements:
+            CreateFunctionParser.parse(database, statement)
+        for statement in comment_statements:
+            CommentParser.parse(database, statement)
 
-            if PgDumpLoader.PATTERN_ALTER_TABLE.match(statement):
-                AlterTableParser.parse(database, statement)
-                continue
-
-            if PgDumpLoader.PATTERN_CREATE_SEQUENCE.match(statement):
-                CreateSequenceParser.parse(database, statement)
-                continue
-
-            if PgDumpLoader.PATTERN_ALTER_SEQUENCE.match(statement):
-                AlterSequenceParser.parse(database, statement)
-                continue
-
-            if PgDumpLoader.PATTERN_CREATE_INDEX.match(statement):
-                CreateIndexParser.parse(database, statement)
-                continue
-
-            if PgDumpLoader.PATTERN_CREATE_VIEW.match(statement):
-                CreateViewParser.parse(database, statement)
-                continue
-
-            if PgDumpLoader.PATTERN_ALTER_VIEW.match(statement):
-                AlterViewParser.parse(database, statement)
-                continue
-
-            if PgDumpLoader.PATTERN_CREATE_TRIGGER.match(statement):
-                CreateTriggerParser.parse(database, statement, ignoreSlonyTriggers)
-                continue
-
-            if PgDumpLoader.PATTERN_CREATE_FUNCTION.match(statement):
-                CreateFunctionParser.parse(database, statement)
-                continue
-
-            if PgDumpLoader.PATTERN_COMMENT.match(statement):
-                CommentParser.parse(database, statement)
-                continue
-
+        for statement in other_statements:
             logging.info('Ignored statement: %s' % statement)
 
         return database

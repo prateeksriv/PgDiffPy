@@ -1,10 +1,9 @@
 from diff.PgDiffUtils import PgDiffUtils
-from helpers.OrderedDict import OrderedDict
 
 class PgTable(object):
     def __init__(self, tableName):
         self.name=tableName
-        self.columns=OrderedDict()
+        self.columns={}
         self.indexes=dict()
         self.constraints=dict()
         self.triggers=dict()
