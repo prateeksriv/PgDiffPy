@@ -10,19 +10,49 @@ This tool is useful for database administrators and developers who need to manag
 
 ## Installation
 
-1.  Clone the repository:
+There are a few ways to install PgDiffPy. The recommended approach is to use a Python virtual environment.
+
+### Recommended: Using a Virtual Environment
+
+A virtual environment isolates the project dependencies from your system-wide Python packages, preventing potential conflicts.
+
+1.  **Clone the repository:**
     ```bash
     git clone https://github.com/Dancer3809/PgDiffPy.git
-    ```
-2.  Navigate to the project directory:
-    ```bash
     cd PgDiffPy
     ```
-3.  Install the package using pip:
+
+2.  **Create and activate a virtual environment:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3.  **Install the package:**
     ```bash
     pip install .
     ```
-    This will install the necessary dependencies and add the `pgdiff` command to your path.
+    This will install the `pgdiff` command inside the virtual environment's `bin` directory.
+
+### Alternative: Installing for the Current User
+
+You can install the package for your user account without needing a virtual environment.
+
+```bash
+pip install --user .
+```
+
+This will install the package in your user's local directory (typically `~/.local`). The `pgdiff` command will be placed in `~/.local/bin/`.
+
+**Note:** To run the `pgdiff` command directly from the terminal, you must add `~/.local/bin` to your shell's `PATH` variable. You can check your `PATH` with `echo $PATH`.
+
+### Alternative: Global Installation (Not Recommended)
+
+You can also install the package globally, but this is generally discouraged as it can lead to dependency conflicts with other system packages.
+
+```bash
+sudo pip install .
+```
 
 ## Usage
 

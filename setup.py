@@ -4,7 +4,7 @@ setup(
     name='PgDiffPy',
     version='1.0.0',
     author='Prateek',
-    author_email='prateek.das@gmail.com',
+    author_email='for.groups+GITHUB@gmail.com',
     description='A Python-based tool for comparing PostgreSQL database schemas.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
