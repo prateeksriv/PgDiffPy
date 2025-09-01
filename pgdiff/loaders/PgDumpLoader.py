@@ -1,18 +1,18 @@
 import sqlparse
 import re
 import logging
-from schema.PgDatabase import PgDatabase
-from parser.CreateSchemaParser import CreateSchemaParser
-from parser.CreateTableParser import  CreateTableParser
-from parser.AlterTableParser import AlterTableParser
-from parser.CreateIndexParser import CreateIndexParser
-from parser.CreateFunctionParser import CreateFunctionParser
-from parser.CreateSequenceParser import CreateSequenceParser
-from parser.AlterSequenceParser import AlterSequenceParser
-from parser.CreateViewParser import CreateViewParser
-from parser.CreateTriggerParser import CreateTriggerParser
-from parser.AlterViewParser import AlterViewParser
-from parser.CommentParser import CommentParser
+from ..schema.PgDatabase import PgDatabase
+from ..parser.CreateSchemaParser import CreateSchemaParser
+from ..parser.CreateTableParser import  CreateTableParser
+from ..parser.AlterTableParser import AlterTableParser
+from ..parser.CreateIndexParser import CreateIndexParser
+from ..parser.CreateFunctionParser import CreateFunctionParser
+from ..parser.CreateSequenceParser import CreateSequenceParser
+from ..parser.AlterSequenceParser import AlterSequenceParser
+from ..parser.CreateViewParser import CreateViewParser
+from ..parser.CreateTriggerParser import CreateTriggerParser
+from ..parser.AlterViewParser import AlterViewParser
+from ..parser.CommentParser import CommentParser
 
 class PgDumpLoader(object):
 

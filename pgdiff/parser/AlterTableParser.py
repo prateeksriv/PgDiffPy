@@ -1,6 +1,6 @@
 import logging
-from parser.Parser import Parser, ParserUtils
-from schema.PgConstraint import PgConstraint
+from .Parser import Parser, ParserUtils
+from ..schema.PgConstraint import PgConstraint
 
 class AlterTableParser(object):
 

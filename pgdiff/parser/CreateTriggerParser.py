@@ -1,5 +1,5 @@
-from parser.Parser import Parser, ParserUtils
-from schema.PgTrigger import PgTrigger
+from .Parser import Parser, ParserUtils
+from ..schema.PgTrigger import PgTrigger
 
 class CreateTriggerParser(object):
     @staticmethod

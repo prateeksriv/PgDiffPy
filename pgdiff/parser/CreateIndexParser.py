@@ -1,5 +1,5 @@
-from parser.Parser import Parser, ParserUtils
-from schema.PgIndex import PgIndex
+from .Parser import Parser, ParserUtils
+from ..schema.PgIndex import PgIndex
 
 class CreateIndexParser(object):
     @staticmethod

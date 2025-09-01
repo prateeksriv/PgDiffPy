@@ -1,7 +1,7 @@
-from parser.Parser import Parser, ParserUtils
-from schema.PgTable import PgTable
-from schema.PgConstraint import PgConstraint
-from schema.PgColumn import PgColumn
+from .Parser import Parser, ParserUtils
+from ..schema.PgTable import PgTable
+from ..schema.PgConstraint import PgConstraint
+from ..schema.PgColumn import PgColumn
 
 
 class CreateTableParser(object):

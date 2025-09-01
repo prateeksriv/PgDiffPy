@@ -1,5 +1,5 @@
 import re
-from diff.PgDiffUtils import PgDiffUtils
+from ..diff.PgDiffUtils import PgDiffUtils
 
 class PgConstraint(object):
     PATTERN_PRIMARY_KEY = re.compile(r".*PRIMARY[\s]+KEY.*", re.I)

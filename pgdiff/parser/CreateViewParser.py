@@ -1,5 +1,5 @@
-from parser.Parser import Parser, ParserUtils
-from schema.PgView import PgView
+from .Parser import Parser, ParserUtils
+from ..schema.PgView import PgView
 
 class CreateViewParser(object):
     @staticmethod

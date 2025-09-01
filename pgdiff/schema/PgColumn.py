@@ -1,5 +1,5 @@
 import re
-from diff.PgDiffUtils import PgDiffUtils
+from ..diff.PgDiffUtils import PgDiffUtils
 
 class PgColumn(object):
 

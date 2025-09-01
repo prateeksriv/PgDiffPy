@@ -1,7 +1,7 @@
 import hashlib
 import base64
 
-from diff.PgDiffUtils import PgDiffUtils
+from ..diff.PgDiffUtils import PgDiffUtils
 
 class PgFunction(object):
     def __init__(self):

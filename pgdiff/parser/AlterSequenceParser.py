@@ -1,5 +1,5 @@
-from parser.Parser import Parser, ParserUtils
-from schema.PgSequence import PgSequence
+from .Parser import Parser, ParserUtils
+from ..schema.PgSequence import PgSequence
 
 class AlterSequenceParser(object):
     @staticmethod

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PgDiffPy"
+version = "1.0.0"
+authors = [
+  { name="Prateek", email="for.groups+GITHUB@gmail.com" },
+]
+description = "A Python-based tool for comparing PostgreSQL database schemas."
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "sqlparse>=0.1.8",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Dancer3809/PgDiffPy"
+
+[project.scripts]
+pgdiff = "pgdiff.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]

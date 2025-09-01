@@ -1,3 +1,5 @@
+from .PgDiffUtils import PgDiffUtils
+
 class PgDiffIndexes(object):
     @staticmethod
     def createIndexes(writer, oldSchema, newSchema, searchPathHelper):

@@ -1,5 +1,5 @@
-from parser.Parser import Parser, ParserUtils
-from schema.PgFunction import PgFunction, Argument
+from .Parser import Parser, ParserUtils
+from ..schema.PgFunction import PgFunction, Argument
 
 class CommentParser(object):
 

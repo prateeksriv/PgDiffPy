@@ -1,4 +1,4 @@
-from diff.PgDiffUtils import PgDiffUtils
+from ..diff.PgDiffUtils import PgDiffUtils
 
 class PgTable(object):
     def __init__(self, tableName):

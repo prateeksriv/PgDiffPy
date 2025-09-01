@@ -10,11 +10,7 @@ This tool is useful for database administrators and developers who need to manag
 
 ## Installation
 
-There are a few ways to install PgDiffPy. The recommended approach is to use a Python virtual environment.
-
-### Recommended: Using a Virtual Environment
-
-A virtual environment isolates the project dependencies from your system-wide Python packages, preventing potential conflicts.
+You can install PgDiffPy directly from the source repository using `pip`. It is recommended to do this within a Python virtual environment to avoid conflicts with system-wide packages.
 
 1.  **Clone the repository:**
     ```bash
@@ -22,37 +18,22 @@ A virtual environment isolates the project dependencies from your system-wide Py
     cd PgDiffPy
     ```
 
-2.  **Create and activate a virtual environment:**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
-
-3.  **Install the package:**
+2.  **Install the package:**
     ```bash
     pip install .
     ```
-    This will install the `pgdiff` command inside the virtual environment's `bin` directory.
+
+This will install the `pgdiff` command-line tool and its dependencies. If you are using a virtual environment, the command will be available directly in your shell.
 
 ### Alternative: Installing for the Current User
 
-You can install the package for your user account without needing a virtual environment.
+If you prefer not to use a virtual environment, you can install the package for your user account:
 
 ```bash
 pip install --user .
 ```
 
-This will install the package in your user's local directory (typically `~/.local`). The `pgdiff` command will be placed in `~/.local/bin/`.
-
-**Note:** To run the `pgdiff` command directly from the terminal, you must add `~/.local/bin` to your shell's `PATH` variable. You can check your `PATH` with `echo $PATH`.
-
-### Alternative: Global Installation (Not Recommended)
-
-You can also install the package globally, but this is generally discouraged as it can lead to dependency conflicts with other system packages.
-
-```bash
-sudo pip install .
-```
+This installs the package in your user's local directory (e.g., `~/.local`). To run the `pgdiff` command directly, you may need to add the local bin directory (e.g., `~/.local/bin`) to your shell's `PATH`.
 
 ## Usage
 
